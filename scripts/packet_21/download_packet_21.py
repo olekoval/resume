@@ -3,11 +3,11 @@ import sys
 from pathlib import Path
 import polars as pl
 from dotenv import load_dotenv
-
 from rich.console import Console
+
+
 console = Console()
 
-# Прибираємо сповіщення від Arrow/ADBC -
 os.environ["POLARS_UNKNOWN_EXTENSION_TYPE_BEHAVIOR"] = "load_as_storage"
 
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -18,9 +18,8 @@ load_dotenv(dotenv_path=dotenv_path)
 
 db_url = os.getenv("DB_URL")
 if not db_url:
-    raise ValueError("DB_URL не задано в .env")
+    raise ValueError("Missing DB_URL in .env")
     
-# ⚡⚡⚡ якщо використовується поле з типом даних uuid, то обов'язково його конвертувати ::text ⚡⚡⚡
 query= """
 WITH dicts AS (
     SELECT 
@@ -54,7 +53,7 @@ SELECT
 """
 
 console.print(
-    "🚀 ... Запуск процесу зчитування даних через Polars",
+    "🚀 ... Start reading data with Polars",
     style="bright_blue"
 )
 try:
@@ -64,20 +63,20 @@ try:
         engine="adbc"
     )
     console.print(
-        f"✅ 'завантажено: {df.shape[0]} рядків.",
+        f"✅ 'Loaded: {df.shape[0]} rows.",
         style="bold green"
     )
 except Exception as e:
     console.print(
-        f"❌ ... Помилка у запиті '{e}",
+            f"❌ ... Query error: '{e}",
         style="bold bright_red"
     )
 
-# ------------------------------ Запуск на виконання ------------------------------
+# ------------------------------ Run execution ------------------------------
 if __name__ == "__main__":
     if df is not None and not df.is_empty():
         df.write_parquet(out_dir)
-        console.print(f"💾 Збережено: {out_dir} ({df.shape[0]} рядків)", style="bold green")
+        console.print(f"💾 Saved: {out_dir} ({df.shape[0]} rows)", style="bold green")
     print(df)
 
 
