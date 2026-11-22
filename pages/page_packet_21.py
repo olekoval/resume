@@ -3,7 +3,7 @@ from dash import html
 
 
 dash.register_page(__name__,
-                   path='/portfolio/page-test1'
+                   path='/portfolio/page-packet_21'
                    )
 
 
