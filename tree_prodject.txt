@@ -1,0 +1,12 @@
+resume/
+  app.py
+  utils/
+    data_loader.py
+  data/
+    packet_21/
+      dataset.parquet
+  pages/
+    page_packet_21.py
+  pyproject.toml
+  temp/
+    loader_temp.py
