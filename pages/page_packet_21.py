@@ -1,6 +1,6 @@
 import dash_bootstrap_components as dbc
 import dash
-from dash import html
+from dash import html, dcc
 
 
 dash.register_page(__name__,
@@ -18,7 +18,19 @@ layout = dbc.Container(
                 children=[
                     dbc.Tab(label="Графік",
                             tab_id="graph-tab",
-                            active_label_class_name="bg-primary text-white "
+                            active_label_class_name="bg-primary text-white",
+                            children=[
+                                dbc.Row(
+                                    [
+                                        dbc.Col(, width=2),
+                                        dbc.Col(dcc.Graph(id="main-chart"), width=10),
+                                    ]),
+                                dbc.Row(
+                                    [
+                                        dbc.Col(, width=2),
+                                        dbc.Col(dcc.Graph(id="sub-chart"), width=10),
+                                    ]),
+                                ]
                             ),
                     dbc.Tab(label="Опис",
                             tab_id="description-tab"),
